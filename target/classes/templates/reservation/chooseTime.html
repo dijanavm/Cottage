@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+-->
+  <link rel="stylesheet" href="../../static/css/profileCSS.css">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <link th:rel="stylesheet" th:href="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}"/>
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+  <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
+
+  <title>Reservation</title>
+</head>
+<body>
+
+<div class="container-fluid bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Vikendice Pavlovic</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Reservations
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/boatReservations/upcoming'}"> Upcoming boat reservations</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/boatReservations/history'}">Boat reservation history</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/boatReservations/chooseTime'}">Make boat reservation</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/instructorReservations/upcoming'}"> Upcoming instructor reservations</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/instructorReservations/history'}">Instructor reservation history</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/instructorReservations/chooseTime'}">Make instructor reservation</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/cottageReservations/upcoming'}"> Upcoming cottage reservations</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/cottageReservations/history'}">Cottage reservation history</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/cottageReservations/chooseTime'}">Make cottage reservation</a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" th:href="${'/cottages/allCottages'}">All cottages</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="${'/boats/allBoats'}">All boats</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="${'/adventures/allAdventures'}">All fishing instructors</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="${'/client/profile/__${principal.id}__'}">Profile</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('CLIENT')">
+          <a class="nav-link" th:href="${'/client/home'}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="${'/auth/logout'}">Logout</a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+</div>
+
+<div class="container mySpace">
+  <div class="center-align blue lighten-5">
+    <h1>Choose reservation parameters</h1> </br></br>
+    <form th:action="@{'/__${res_type}__Reservations/chooseTime'}" method="post">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="tab-content profile-tab" id="myTabContent">
+            <div>
+              <div>
+                <div class="form-group">
+                  <label for="date">Start date</br></label>
+                  <div class="input-group date" id="date1" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#date1" name="startDate"
+                           th:value="${startDate}" id="date" placeholder="format example: 12/12/2021"/>
+                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="date2">End date</br></label>
+                  <div class="input-group date" id="date2" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#date1" name="endDate"
+                           th:value="${endDate}" id="date_2" placeholder="format example: 12/12/2021"/>
+                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="date2">Number of persons</br></label>
+                  <div class="input-group" id="numberPersons">
+                    <input type="text" name="numPersons" th:value="${numPersons}" id="number" placeholder="4"/>
+                  </div>
+                </div>
+                </br></br>
+                <input class="btn grey lighten-4 black-text" type="submit" value="Proceed">
+              </div>
+            </div>
+          </div>
+        </div></div>
+    </form>
+  </div>
+</div>
+
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/moment/moment.min.js}"></script>
+<script th:src="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js}"></script>
+<script th:src="@{assets/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
+
+<!--<script>
+    $('.input-group.date').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+</script>-->
+
+<script>
+  $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+    icons: {
+      time: 'far fa-clock',
+      date: 'far fa-calendar',
+      up: 'fas fa-arrow-up',
+      down: 'fas fa-arrow-down',
+      previous: 'fas fa-chevron-left',
+      next: 'fas fa-chevron-right',
+      today: 'far fa-calendar-check-o',
+      clear: 'far fa-trash',
+      close: 'far fa-times'
+    } });
+
+  $('#datetimepicker1').datetimepicker({
+    format: 'DD/MM/YYYY h:mm A'
+  });
+</script>
+
+</body>
+</html>

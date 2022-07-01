@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+-->
+  <link rel="stylesheet" href="../../static/css/profileCSS.css">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <title>Adventure</title>
+</head>
+<body>
+
+<div class="container-fluid bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Memedovic cottages</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Reservations
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/boatReservations/upcoming'}"> Upcoming boat reservations</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/boatReservations/history'}">Boat reservation history</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/boatReservations/chooseTime'}">Make boat reservation</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/instructorReservations/upcoming'}"> Upcoming instructor reservations</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/instructorReservations/history'}">Instructor reservation history</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/instructorReservations/chooseTime'}">Make instructor reservation</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/cottageReservations/upcoming'}"> Upcoming cottage reservations</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/cottageReservations/history'}">Cottage reservation history</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/cottageReservations/chooseTime'}">Make cottage reservation</a>
+          </div>
+        </li>
+        <li class="nav-item" sec:authorize="!hasRole('COTTAGE_OWNER')">
+          <a class="nav-link" th:href="${'/cottages/allCottages'}">All cottages</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('COTTAGE_OWNER')">
+          <a class="nav-link" th:href="${'/cottages/allMyCottages'}">My Cottages</a>
+        </li>
+        <li class="nav-item" sec:authorize="!hasRole('COTTAGE_OWNER')">
+          <a class="nav-link"th:href="${'/boats/allBoats'}">All boats</a>
+        </li>
+        <li class="nav-item" sec:authorize="!hasRole('COTTAGE_OWNER')">
+          <a class="nav-link" href="#">All fishing instructors</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAnonymous()">
+          <a class="nav-link" th:href="${'/auth/login'}">Log in</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAnonymous()">
+          <a class="nav-link" th:href="${'/auth/signup'}">Register</a>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link" th:href="${'/auth/home'}">Home</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('CLIENT')">
+          <a class="nav-link" th:href="${'/client/profile/__${principal.id}__'}">Profile</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('COTTAGE_OWNER')">
+          <a class="nav-link" th:href="${'/cottageOwner/profile/__${principal.id}__'}">Profile</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+          <a class="nav-link" th:href="${'/auth/logout'}">Log out</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div> </br></br>
+
+<div class="container emp-profile">
+  <!--<form method="post">-->
+  <form th:object="${instructor}" method="get">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="tab-content profile-tab" id="myTabContent">
+          <div id="profile">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Instructor</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${instructor.instructorInfo}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Adventure</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${instructor.adventureName}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>State</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${instructor.adventureState}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>City</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${instructor.adventureCity}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Residence</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${instructor.adventureResidence}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Average rating</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${instructor.averageRating}"></p>
+              </div>
+            </div>
+            </br></br></br>
+            <a th:href="@{'/adventures/__${instructor.id}__/timeSlots'}">Reservation time slots</a>
+            </br></br>
+            <a sec:authorize="hasRole('CLIENT')" th:href="@{'/instructorReservations/onDiscount/__${instructor.id}__'}">View special offers</a>
+            </br></br>
+            <a sec:authorize="hasRole('CLIENT')" th:href="@{'/subscriptions/instructor/new/__${instructor.id}__'}">Subscribe</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link href="css/materialize.min.css" media="screen,projection" rel="stylesheet" type="text/css"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <!-- Compiled and minified CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
+    <title>Edit Adventure</title>
+</head>
+<body>
+<div class="container">
+    <div class="center-align blue lighten-5">
+        <!--      <form th:action="@{'/cottages/allMyCottages/__${principal.id}__/editCottage/__${cottage.id}__/submit'}" th:object="${cottage}" method="post">-->
+        <form method="post" th:action="@{'/adventures/__${adventure.id}__/edit/submit'}" th:object="${adventure}">
+            <br><label for="name">Name:</label>
+            <input id="name" th:field="*{adventureName}" type="text"/>
+
+            <br><label for="residence">Residence:</label>
+            <input id="residence" th:field="*{adventureResidence}" type="text"/>
+
+            <br><label for="city">City:</label>
+            <input id="city" th:field="*{adventureCity}" type="text"/>
+
+            <br><label for="state">State:</label>
+            <input id="state" th:field="*{adventureState}" type="text"/>
+
+            <br><label for="promotionalDescription">Promotional Description:</label>
+            <input id="promotionalDescription" th:field="*{adventureDescription}" type="text"/>
+
+            <br><label for="instructorInfo">About instructor:</label>
+            <input id="instructorInfo" th:field="*{instructorInfo}" type="text"/>
+
+            <br><label for="maxClients">Number of maximum Clients:</label>
+            <input id="maxClients" th:field="*{maxClients}" type="number"/>
+
+            <br><label for="price">Price:</label>
+            <input id="price" th:field="*{price}" type="number"/>
+
+            <br><label for="cancellationFeePercent">Cancellation Fee in %:</label>
+            <input id="cancellationFeePercent" th:field="*{cancellationFeePercent}" type="number"/>
+
+            <br><label for="conductRules">Rules:</label>
+            <input id="conductRules" th:field="*{conductRules}" type="text"/>
+
+            <br><label for="availableFrom">Available From:</label>
+            <input id="availableFrom" th:field="*{availableFrom}" type="datetime-local"/>
+
+            <br><label for="availableUntil">Available Until:</label>
+            <input id="availableUntil" th:field="*{availableUntil}" type="datetime-local"/>
+
+            <br><label for="quickReservation">Quick Reservation:</label>
+            <input id="quickReservation" th:field="*{quickReservation}" type="text"/>
+            <br>
+
+            <br>
+
+            <!--todo add images and additional services -->
+
+            <div class="form-group">
+                <button class="btn btn-block btn-success bg-dark" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

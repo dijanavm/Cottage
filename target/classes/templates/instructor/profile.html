@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link href="css/materialize.min.css" media="screen,projection" rel="stylesheet" type="text/css"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <!-- Compiled and minified CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
+    <title>Profile</title>
+</head>
+<body>
+
+<div class="center-align">
+    <form method="get" th:object="${principal}">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="profile-img">
+                    <img alt="" src="https://kctherapy.com/wp-content/uploads/2019/09/default-user-avatar-300x293.png"/>
+                </div>
+            </div>
+        </div>
+
+        <div th:object="${principal}">
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <label>Name:</label>
+            </div>
+            <div class="col-md-8">
+                <p th:text="${principal.getFullName()}"></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <label>Email:</label>
+            </div>
+            <div class="col-md-8">
+                <p th:text="${principal.email}"></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <label>Phone number</label>
+            </div>
+            <div class="col-md-8">
+                <p th:text="${principal.phoneNumber}"></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <label>Residence</label>
+            </div>
+            <div class="col-md-8">
+                <p th:text="${principal.residence}"></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <label>City</label>
+            </div>
+            <div class="col-md-8">
+                <p th:text="${principal.city}"></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <label>State</label>
+            </div>
+            <div class="col-md-8">
+                <p th:text="${principal.state}"></p>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

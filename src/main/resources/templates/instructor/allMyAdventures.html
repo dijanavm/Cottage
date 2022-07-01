@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"><!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link href="css/materialize.min.css" media="screen,projection" rel="stylesheet" type="text/css"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <!-- Compiled and minified CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
+    <title>My Adventures</title>
+</head>
+<body>
+<div class="container">
+    </br>
+    <h3>My adventures</h3>
+    <br>
+    <a class="nav-link" th:href="${'/instructor/profile/__${principal.id}__'}">Profile</a>
+    <br>
+    <div class="row">
+        <button class="btn mt-2" type="button"><a th:href="${'/adventures/addAdventure/__${principal.id}__'}">Add new
+            adventure</a></button>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col col-lg-5">
+            <form method="get" th:action="@{'/adventures/allMyAdventures/__${principal.id}__'}">
+                <input name="keyword" placeholder="Name or address..." type="text"/>
+                <button class="btn btn-dark mt-2" type="submit">Search</button>
+                </br>
+            </form>
+        </div>
+        </br></br></br></br>
+        <div class="table">
+            </br>
+            <table id="adventures" width="90%">
+                <tr>
+                    <th>Name:</th>
+                    <th>Residence:</th>
+                    <th>City:</th>
+                    <th>State:</th>
+                    <th>Average rating:</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr th:each="adventure:${adventures}">
+                    <td th:text="${adventure.adventureName}"></td>
+                    <td th:text="${adventure.adventureResidence}"></td>
+                    <td th:text="${adventure.adventureCity}"></td>
+                    <td th:text="${adventure.adventureState}"></td>
+                    <td th:text="${adventure.averageRating}"></td>
+                    <td><a th:href="${'/adventures/' + adventure.getId()}">View adventure</a></td>
+                    <td>
+                        <a th:href="@{'/adventures/allMyAdventures/__${principal.id}__/additionalServices/__${adventure.id}__'}">Additional
+                            Services</a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/adventures/allMyAdventures/__${principal.id}__/editAdventure/__${adventure.id}__'}">Edit</a>
+                    </td>
+                    <td><a th:href="@{'/adventures/allMyAdventures/__${principal.id}__/remove/__${adventure.id}__'}">Remove</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

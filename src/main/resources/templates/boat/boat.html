@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <!--
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+-->
+  <!-- Bootstrap CSS -->
+  <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+-->
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!--
+  <link rel="stylesheet" href="../../static/css/profileCSS.css">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+-->
+  <title>Boat</title>
+</head>
+<body>
+
+<div class="container-fluid bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Apoteka Jankovic</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Reservations
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/boatReservations/upcoming'}"> Upcoming boat reservations</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/boatReservations/history'}">Boat reservation history</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/boatReservations/chooseTime'}">Make boat reservation</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/instructorReservations/upcoming'}"> Upcoming instructor reservations</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/instructorReservations/history'}">Instructor reservation history</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/instructorReservations/chooseTime'}">Make instructor reservation</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/cottageReservations/upcoming'}"> Upcoming cottage reservations</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/cottageReservations/history'}">Cottage reservation history</a>
+            <a class="dropdown-item" sec:authorize="hasRole('CLIENT')" th:href="@{'/cottageReservations/chooseTime'}">Make cottage reservation</a>
+
+            <a class="dropdown-item" sec:authorize="hasRole('BOAT_OWNER')" th:href=@{'/boatReservations/upcomingOwnersReservations/__${principal.id}__'}> Upcoming reservations</a>
+            <a class="dropdown-item" sec:authorize="hasRole('BOAT_OWNER')" th:href=@{'/boatReservations/pastOwnersReservations/__${principal.id}__'}>Reservation history</a>
+            <a class="dropdown-item" sec:authorize="hasRole('BOAT_OWNER')" th:href="@{'/boatReservations/viewCalendar/__${principal.id}__'}">Calendar</a>
+            <a class="dropdown-item" sec:authorize="hasRole('BOAT_OWNER')" th:href="@{'/boatReservations/__${principal.id}__/makeReservationWithClient'}">Make reservation with client</a>
+          </div>
+        </li>
+        <li sec:authorize="hasRole('BOAT_OWNER')" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Reports
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+            <a class="dropdown-item" sec:authorize="hasRole('BOAT_OWNER')" th:href=@{'/boats/__${principal.id}__/averageRating'}> Average rating</a>
+            <a class="dropdown-item" sec:authorize="hasRole('BOAT_OWNER')" th:href=@{'/boatReservations/__${principal.id}__/chooseDate'}> Incomes</a>
+            <a class="dropdown-item" sec:authorize="hasRole('BOAT_OWNER')" th:href=@{'/boatReservations/__${principal.id}__/chooseDate3'}> Attendance</a>
+          </div>
+        </li>
+        <li class="nav-item" sec:authorize="!hasAnyRole('COTTAGE_OWNER', 'BOAT_OWNER')">
+          <a class="nav-link" th:href="${'/cottages/allCottages'}">All cottages</a>
+        </li>
+        <li class="nav-item" sec:authorize="!hasAnyRole('COTTAGE_OWNER', 'BOAT_OWNER')">
+          <a class="nav-link"th:href="${'/boats/allBoats'}">All boats</a>
+        </li>
+        <li class="nav-item" sec:authorize="!hasAnyRole('COTTAGE_OWNER', 'BOAT_OWNER')">
+          <a class="nav-link" th:href="${'/adventures/allAdventures'}">All fishing instructors</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('BOAT_OWNER')">
+          <a class="nav-link" th:href="${'/boats/allMyBoats/__${principal.id}__'}">My Boats</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAnonymous()">
+          <a class="nav-link" th:href="${'/auth/login'}">Log in</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAnonymous()">
+          <a class="nav-link" th:href="${'/auth/signup'}">Register</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAnonymous()">
+          <a class="nav-link" th:href="${'/auth/home'}">Home</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('CLIENT')">
+          <a class="nav-link" th:href="${'/client/home'}">Home</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('CLIENT')">
+          <a class="nav-link" th:href="${'/client/profile/__${principal.id}__'}">Profile</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('BOAT_OWNER')">
+          <a class="nav-link" th:href="${'/boatOwner/profile/__${principal.id}__'}">Profile</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+          <a class="nav-link" th:href="${'/auth/logout'}">Log out</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div> </br></br>
+
+<div class="container emp-profile">
+  <form th:object="${boat}" method="get">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="tab-content profile-tab" id="myTabContent">
+          <div id="profile">
+
+            <p th:each="img:${boat.imageUrl}">
+              <img alt="" th:src="@{'/getImage/'+${img} + '/' + ${principal.id}}">
+            </p>
+              <p th:each="i:${boat.imageUrl}">
+                  <img alt="" th:src="${i}">
+              </p>
+
+            <div class="row">
+              <div class="col-md-6">
+                <label>Boat name</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.boatName}"></p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <label>Engine type</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.engineType.getDisplayName()}"></p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <label>Length (in meters)</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.length}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Engine number</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.engineNumber}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Engine power (in KW)</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.enginePower}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Max speed (in mph)</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.maxSpeed}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Owner</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.getBoatOwner().getFullName()}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>State</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.getBoatOwner().getState()}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>City</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.getBoatOwner().getCity()}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Residence</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.getBoatOwner().getResidence()}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Capacity</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.capacity}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Rules</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.rules}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Description</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.description}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Available from</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.availableFrom}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Available until</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.availableUntil}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Cancellation Condition</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.cancellationCondition}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Price:</label>
+              </div>
+              <div class="col-md-6">
+                <p th:text="${boat.price}"></p>
+              </div>
+            </div>
+            <div class="row">
+              <form th:object="${additionalService}" method="get">
+                <table>
+                  <thead>
+                  <tr>
+                    <th> Additional service </th>
+                    <th> Price </th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:if="${boat.additionalServices.empty}">
+                    <td colspan="2"> No Additional services </td>
+                  </tr>
+                  <tr th:each="additionalService : ${boat.additionalServices}">
+                    <td><span th:text="${additionalService.name}"> Additional service </span></td>
+                    <td><span th:text="${additionalService.price}"> Price </span></td>
+                    <td><a th:href="@{'/boats/__${boat.id}__/removeAdditionalService/__${additionalService.id}__'}">Remove</a></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </form>
+            </div>
+
+            <div class="row">
+              <form th:object="${navigationEquipment}" method="get">
+                <table>
+                  <thead>
+                  <tr>
+                    <th> Navigation Equipment </th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:if="${boat.navigationEquipments.empty}">
+                    <td colspan="2"> No Navigation equipments</td>
+                  </tr>
+                  <tr th:each="navigationEquipment : ${boat.navigationEquipments}">
+                    <td><span th:text="${navigationEquipment.name}"> Navigation equipment </span></td>
+                    <td><a th:href="@{'/boats/__${boat.id}__/removeNavigationEquipment/__${navigationEquipment.id}__'}">Remove</a></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </form>
+            </div>
+
+
+            <div class="row">
+              <form th:object="${fishingEquipment}" method="get">
+                <table>
+                  <thead>
+                  <tr>
+                    <th> Fishing Equipment </th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:if="${boat.fishingEquipments.empty}">
+                    <td colspan="2"> No Fishing equipments</td>
+                  </tr>
+                  <tr th:each="fishingEquipment : ${boat.fishingEquipments}">
+                    <td><span th:text="${fishingEquipment.name}"> Fishing equipment </span></td>
+                    <td><a th:href="@{'/boats/__${boat.id}__/removeFishingEquipment/__${fishingEquipment.id}__'}">Remove</a></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </form>
+            </div>
+
+            </br></br>
+            <div sec:authorize="hasRole('BOAT_OWNER')" class="nav-item dropdown">
+              <a href="#" id="dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Add
+              </a>
+              <div sec:authorize="hasRole('BOAT_OWNER')" class="dropdown-menu" aria-labelledby="dropdown">
+                <a th:href="@{'/boats/__${boat.id}__/addAdditionalService'}">Add additional services</a><br/>
+                <a th:href="@{'/boats/__${boat.id}__/addNavigationEquipment'}">Add navigation equipments</a><br/>
+                <a th:href="@{'/boats/__${boat.id}__/addFishingEquipment'}">Add fishing equipments</a><br/>
+              </div>
+            </div>
+
+            </br></br></br>
+            <a sec:authorize="hasRole('BOAT_OWNER')" th:href="@{'/boats/__${boat.id}__/edit'}">Edit boat</a>
+            </br></br>
+            <a sec:authorize="hasRole('BOAT_OWNER')" th:href="@{'/boats/__${boat.id}__/defineAvailability'}">Define availability</a>
+            </br></br>
+            <a sec:authorize="hasRole('BOAT_OWNER')" th:href="@{'/boatReservations/allDiscounts/__${boat.id}__'}">View discounts</a>
+            </br></br>
+            <a sec:authorize="hasRole('CLIENT')" th:href="@{'/boatReservations/onDiscount/__${boat.id}__'}">View special offers</a>
+            </br></br>
+            <a sec:authorize="hasRole('CLIENT')" th:href="@{'/subscriptions/boat/new/__${boat.id}__'}">Subscribe</a>
+            </br></br>
+            <a sec:authorize="hasRole('BOAT_OWNER')" th:href="@{'/boatReservations/__${boat.id}__/defineDiscount'}">Define discount</a>
+            </br></br>
+            <a sec:authorize="hasRole('CLIENT')" th:href="@{'/reservations/__${boat.id}__/timeSlots'}">Reservation time slots</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+</html>
